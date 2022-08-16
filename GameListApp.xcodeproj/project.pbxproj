@@ -10,7 +10,6 @@
 		B1553DCB28AC25620001C85E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1553DCA28AC25620001C85E /* AppDelegate.swift */; };
 		B1553DCD28AC25620001C85E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1553DCC28AC25620001C85E /* SceneDelegate.swift */; };
 		B1553DCF28AC25620001C85E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1553DCE28AC25620001C85E /* ViewController.swift */; };
-		B1553DD228AC25620001C85E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1553DD028AC25620001C85E /* Main.storyboard */; };
 		B1553DD528AC25620001C85E /* GameListApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1553DD328AC25620001C85E /* GameListApp.xcdatamodeld */; };
 		B1553DD728AC25630001C85E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1553DD628AC25630001C85E /* Assets.xcassets */; };
 		B1553DDA28AC25630001C85E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1553DD828AC25630001C85E /* LaunchScreen.storyboard */; };
@@ -41,7 +40,6 @@
 		B1553DCA28AC25620001C85E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1553DCC28AC25620001C85E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B1553DCE28AC25620001C85E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B1553DD128AC25620001C85E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B1553DD428AC25620001C85E /* GameListApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameListApp.xcdatamodel; sourceTree = "<group>"; };
 		B1553DD628AC25630001C85E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1553DD928AC25630001C85E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,13 +99,9 @@
 		B1553DC928AC25620001C85E /* GameListApp */ = {
 			isa = PBXGroup;
 			children = (
-				B1553DCA28AC25620001C85E /* AppDelegate.swift */,
-				B1553DCC28AC25620001C85E /* SceneDelegate.swift */,
+				B1553DFE28AC27130001C85E /* Sources */,
+				B1553DFD28AC26CA0001C85E /* Core */,
 				B1553DCE28AC25620001C85E /* ViewController.swift */,
-				B1553DD028AC25620001C85E /* Main.storyboard */,
-				B1553DD628AC25630001C85E /* Assets.xcassets */,
-				B1553DD828AC25630001C85E /* LaunchScreen.storyboard */,
-				B1553DDB28AC25630001C85E /* Info.plist */,
 				B1553DD328AC25620001C85E /* GameListApp.xcdatamodeld */,
 			);
 			path = GameListApp;
@@ -130,6 +124,25 @@
 			path = GameListAppUITests;
 			sourceTree = "<group>";
 		};
+		B1553DFD28AC26CA0001C85E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B1553DD828AC25630001C85E /* LaunchScreen.storyboard */,
+				B1553DCA28AC25620001C85E /* AppDelegate.swift */,
+				B1553DCC28AC25620001C85E /* SceneDelegate.swift */,
+				B1553DDB28AC25630001C85E /* Info.plist */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B1553DFE28AC27130001C85E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B1553DD628AC25630001C85E /* Assets.xcassets */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -137,6 +150,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1553DF428AC25630001C85E /* Build configuration list for PBXNativeTarget "GameListApp" */;
 			buildPhases = (
+				B1553DFF28AC28090001C85E /* ShellScript */,
 				B1553DC328AC25620001C85E /* Sources */,
 				B1553DC428AC25620001C85E /* Frameworks */,
 				B1553DC528AC25620001C85E /* Resources */,
@@ -236,7 +250,6 @@
 			files = (
 				B1553DDA28AC25630001C85E /* LaunchScreen.storyboard in Resources */,
 				B1553DD728AC25630001C85E /* Assets.xcassets in Resources */,
-				B1553DD228AC25620001C85E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +268,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B1553DFF28AC28090001C85E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B1553DC328AC25620001C85E /* Sources */ = {
@@ -301,14 +334,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B1553DD028AC25620001C85E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B1553DD128AC25620001C85E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B1553DD828AC25630001C85E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -443,22 +468,24 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ4V82589Y;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GameListApp/Info.plist;
+				INFOPLIST_FILE = GameListApp/Core/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.berkaysancar.GameListApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -471,22 +498,24 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ4V82589Y;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GameListApp/Info.plist;
+				INFOPLIST_FILE = GameListApp/Core/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.berkaysancar.GameListApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -616,6 +645,7 @@
 			currentVersion = B1553DD428AC25620001C85E /* GameListApp.xcdatamodel */;
 			path = GameListApp.xcdatamodeld;
 			sourceTree = "<group>";
+			usesTabs = 0;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
