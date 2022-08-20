@@ -8,7 +8,6 @@
 import Alamofire
 
 protocol GameServiceProtocol {
-//    func fetchGames(completion: @escaping (([Game]?, String?) -> Void))
     func fetchGames2(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void))
 }
 
