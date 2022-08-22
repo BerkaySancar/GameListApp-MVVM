@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B11F8E8928B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */; };
+		B11F8E8A28B3A033002D3121 /* Favorite+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */; };
+		B11F8E8D28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */; };
+		B11F8E8F28B3A76F002D3121 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8E28B3A76F002D3121 /* FavoritesTableViewCell.swift */; };
 		B137505C28B12EA000A51DE9 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137505B28B12EA000A51DE9 /* FavoritesViewModel.swift */; };
+		B137505F28B136D600A51DE9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137505E28B136D600A51DE9 /* UIViewController+Extension.swift */; };
 		B140412528ACE2BC00B0CB57 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140412428ACE2BC00B0CB57 /* NetworkManager.swift */; };
 		B140412828ACE78200B0CB57 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140412728ACE78200B0CB57 /* Constants.swift */; };
 		B140412B28AD101000B0CB57 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B140412A28AD101000B0CB57 /* Alamofire */; };
@@ -48,7 +53,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFavoriteHelper.swift; sourceTree = "<group>"; };
+		B11F8E8E28B3A76F002D3121 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		B137505B28B12EA000A51DE9 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		B137505E28B136D600A51DE9 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		B140412428ACE2BC00B0CB57 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		B140412728ACE78200B0CB57 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B140412C28AD1A2C00B0CB57 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
@@ -100,6 +110,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B11F8E8B28B3A2B3002D3121 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B11F8E9028B3CE70002D3121 /* DataModels */,
+				B11F8E9128B3CF07002D3121 /* Favorite */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		B11F8E9028B3CE70002D3121 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				B1553DD328AC25620001C85E /* GameListApp.xcdatamodeld */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		B11F8E9128B3CF07002D3121 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */,
+				B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */,
+				B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		B137505D28B136B900A51DE9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B137505E28B136D600A51DE9 /* UIViewController+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B140412228ACE26F00B0CB57 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,8 +190,9 @@
 		B140413628AD31BC00B0CB57 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
-				B140413728AD31D500B0CB57 /* FavoritesViewController.swift */,
+				B11F8E8E28B3A76F002D3121 /* FavoritesTableViewCell.swift */,
 				B137505B28B12EA000A51DE9 /* FavoritesViewModel.swift */,
+				B140413728AD31D500B0CB57 /* FavoritesViewController.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -176,10 +222,11 @@
 			children = (
 				B1553DFD28AC26CA0001C85E /* Core */,
 				B1553DFE28AC27130001C85E /* Sources */,
+				B137505D28B136B900A51DE9 /* Extensions */,
+				B11F8E8B28B3A2B3002D3121 /* CoreData */,
 				B1553E0328AC29FA0001C85E /* Network */,
 				B1553E0528AC2A060001C85E /* Model */,
 				B1553E0428AC2A000001C85E /* Scenes */,
-				B1553DD328AC25620001C85E /* GameListApp.xcdatamodeld */,
 			);
 			path = GameListApp;
 			sourceTree = "<group>";
@@ -410,11 +457,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1553DCF28AC25620001C85E /* HomeViewController.swift in Sources */,
+				B11F8E8F28B3A76F002D3121 /* FavoritesTableViewCell.swift in Sources */,
 				B140412D28AD1A2C00B0CB57 /* GameService.swift in Sources */,
 				B140413228AD209B00B0CB57 /* GameModel.swift in Sources */,
 				B1553DCB28AC25620001C85E /* AppDelegate.swift in Sources */,
+				B11F8E8D28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift in Sources */,
+				B137505F28B136D600A51DE9 /* UIViewController+Extension.swift in Sources */,
+				B11F8E8A28B3A033002D3121 /* Favorite+CoreDataProperties.swift in Sources */,
 				B140413028AD1B3800B0CB57 /* HomeViewModel.swift in Sources */,
 				B140413528AD315300B0CB57 /* MainTabBarViewController.swift in Sources */,
+				B11F8E8928B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */,
 				B140413828AD31D500B0CB57 /* FavoritesViewController.swift in Sources */,
 				B140412528ACE2BC00B0CB57 /* NetworkManager.swift in Sources */,
 				B1553DCD28AC25620001C85E /* SceneDelegate.swift in Sources */,

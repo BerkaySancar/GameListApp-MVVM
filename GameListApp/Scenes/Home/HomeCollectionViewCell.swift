@@ -36,11 +36,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
-        contentView.addSubview(gameImageView)
-        contentView.addSubview(gameNameLabel)
-        contentView.addSubview(gameFavButton)
-       
+
         configure()
     }
     required init?(coder: NSCoder) {
@@ -48,6 +44,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
 // MARK: - Cell Configure
     private func configure() {
+        
+        contentView.addSubview(gameImageView)
+        contentView.addSubview(gameNameLabel)
+        contentView.addSubview(gameFavButton)
         
         gameNameLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
         gameNameLabel.textColor = .white

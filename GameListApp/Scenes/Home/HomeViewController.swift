@@ -26,6 +26,7 @@ class HomeViewController: UIViewController {
         return searchBar
     }()
     
+    private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView()
       
     private let viewModel: HomeViewModel
@@ -43,20 +44,23 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.getGameList()
         configure()
+        viewModel.getGameList()
         activityIndicator.startAnimating()
        
         viewModel.dataRefreshed = { [weak self] in
             self?.homeCollectionView.reloadData()
             self?.activityIndicator.stopAnimating()
         }
+        
+        viewModel.dataNotRefreshed = { [weak self] in
+            self?.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
+        }
     }
 // MARK: - UI Configure
     private func configure() {
         title = "Game List"
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
         view.addSubview(homeCollectionView)
         view.addSubview(searchBar)
         view.addSubview(activityIndicator)
@@ -64,6 +68,9 @@ class HomeViewController: UIViewController {
         
         homeCollectionView.delegate = self
         homeCollectionView.dataSource = self
+        homeCollectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: UIControl.Event.valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Reloading...")
 
         homeCollectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(5)
@@ -80,11 +87,22 @@ class HomeViewController: UIViewController {
             make.right.equalToSuperview().offset(-20)
         }
     }
+// MARK: - Refresh Collection View Action
+    @objc private func refreshCollectionView() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.viewModel.getGameList()
+            self.homeCollectionView.refreshControl?.endRefreshing()
+        }
+    }
 // MARK: - Favorite Button Actions
         
     @objc private func favButttonTapped(_ sender: UIButton) {
         
-        sender.isSelected = !sender.isSelected
+        sender.isSelected.toggle()
+        
+        CoreDataFavoriteHelper.shared.saveData(name: viewModel.games[sender.tag].name ?? "",
+                                       id: viewModel.games[sender.tag].id ?? 0)
     }
 }
 // MARK: - COLLECTiON ViEW
@@ -102,15 +120,17 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
         cell.gameFavButton.addTarget(self, action: #selector(favButttonTapped(_:)), for: UIControl.Event.touchUpInside)
+        cell.gameFavButton.tag = indexPath.row
         cell.design(gameImageURL: viewModel.games[indexPath.row].background_image ?? "",
                     gameName: viewModel.games[indexPath.row].name ?? "")
+        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: collectionView.frame.size.width / 2.1, height: collectionView.frame.size.width / 1.8)
+        return CGSize(width: collectionView.frame.size.width / 2.1, height: collectionView.frame.size.width / 2.1)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

@@ -5,8 +5,8 @@
 //  Created by Berkay Sancar on 16.08.2022.
 //
 
-import XCTest
 @testable import GameListApp
+import XCTest
 
 class GameListAppTests: XCTestCase {
 
