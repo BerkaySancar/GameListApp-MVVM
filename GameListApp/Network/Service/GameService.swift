@@ -8,12 +8,12 @@
 import Alamofire
 
 protocol GameServiceProtocol {
-    func fetchGames2(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void))
+    func fetchGames(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void))
 }
 
 final class GameService: GameServiceProtocol {
     
-    func fetchGames2(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void)) {
+    func fetchGames(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void)) {
         
         let url = "\(Constants.BASE_URL)?key=\(Constants.API_KEY)"
         

@@ -57,6 +57,11 @@ class HomeViewController: UIViewController {
             self?.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.homeCollectionView.reloadData()
+    }
 // MARK: - UI Configure
     private func configure() {
         title = "Game List"
@@ -101,8 +106,22 @@ class HomeViewController: UIViewController {
         
         sender.isSelected.toggle()
         
-        CoreDataFavoriteHelper.shared.saveData(name: viewModel.games[sender.tag].name ?? "",
-                                       id: viewModel.games[sender.tag].id ?? 0)
+        if let data = CoreDataFavoriteHelper.shared
+            .fetchData()?
+            .filter({ $0.name == viewModel.games[sender.tag].name }) {
+            
+            if data.isEmpty {
+                CoreDataFavoriteHelper.shared.saveData(name: viewModel.games[sender.tag].name ?? "",
+                                                       id: viewModel.games[sender.tag].id ?? 0)
+            } else {
+                
+                if let index = CoreDataFavoriteHelper.shared
+                    .fetchData()?
+                    .firstIndex(where: { $0.name == viewModel.games[sender.tag].name }) {
+                    CoreDataFavoriteHelper.shared.deleteData(index: index)
+                }
+            }
+        }
     }
 }
 // MARK: - COLLECTiON ViEW
@@ -123,6 +142,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.gameFavButton.tag = indexPath.row
         cell.design(gameImageURL: viewModel.games[indexPath.row].background_image ?? "",
                     gameName: viewModel.games[indexPath.row].name ?? "")
+        
+        if let data = CoreDataFavoriteHelper
+            .shared
+            .fetchData()?
+            .filter({ $0.name == viewModel.games[indexPath.row].name }) {
+            cell.gameFavButton.isSelected = !data.isEmpty
+        }
         
         return cell
     }
