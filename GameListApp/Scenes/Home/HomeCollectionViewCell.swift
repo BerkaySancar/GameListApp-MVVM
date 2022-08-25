@@ -33,7 +33,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         button.layer.cornerRadius = 7
         return button
     }()
-    
+ 
+ // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -54,6 +55,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         gameFavButton.setImage(UIImage(systemName: "heart"), for: UIControl.State.normal)
         gameFavButton.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.selected)
         
+// MARK: - Constraints
         gameImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -67,6 +69,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             make.width.height.equalTo(28)
         }
     }
+ // MARK: - Design
     func design(gameImageURL: String, gameName: String) {
         guard let url = URL(string: gameImageURL) else { return }
         gameImageView.kf.setImage(with: url)

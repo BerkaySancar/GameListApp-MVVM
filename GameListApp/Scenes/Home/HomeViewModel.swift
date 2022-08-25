@@ -14,8 +14,8 @@ final class HomeViewModel {
     
     var dataRefreshed: (() -> Void)?
     var dataNotRefreshed: (() -> Void)?
-    var isLoading = false
     
+// MARK: - Init
     init(_ service: GameServiceProtocol = GameService()) {
         self.gameService = service
     }

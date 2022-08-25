@@ -14,6 +14,7 @@ final class FavoritesViewModel {
     
     var dataRefreshed: (() -> Void)?
     
+ // MARK: - Init
     init(_ helper: CoreDataFavoriteHelper = CoreDataFavoriteHelper()) {
         self.coreDataHelper = helper
     }

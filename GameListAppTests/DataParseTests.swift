@@ -8,9 +8,9 @@
 @testable import GameListApp
 import XCTest
 
-class GameListAppTests: XCTestCase {
+class DataParseTests: XCTestCase {
 
-    func testSuccessParser() {
+    func testSuccessGameParser() {
             
         let json = """
                     {
@@ -29,4 +29,21 @@ class GameListAppTests: XCTestCase {
 
             XCTAssertNotNil(games)
         }
+    
+    func testSuccessDetailParser() {
+        
+        let json = """
+                    {
+                    "id": 3498,
+                    "name": "name",
+                    "description": "description",
+                    "background_image": "background",
+                    "website": "website"
+                    }
+                    """.data(using: .utf8)!
+        
+        let details = try! JSONDecoder().decode(Detail.self, from: json)
+        
+        XCTAssertNotNil(details)
+    }
 }

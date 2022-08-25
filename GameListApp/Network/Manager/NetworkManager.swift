@@ -5,8 +5,8 @@
 //  Created by Berkay Sancar on 17.08.2022.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 final class NetworkManager {
     

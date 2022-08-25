@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
                                 forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
         return collectionView
     }()
-
+    
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Type here to search"
@@ -28,9 +28,10 @@ class HomeViewController: UIViewController {
     
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView()
-      
+    
     private let viewModel: HomeViewModel
     
+// MARK: - Init
     init(_ viewModel: HomeViewModel = HomeViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -47,7 +48,7 @@ class HomeViewController: UIViewController {
         configure()
         viewModel.getGameList()
         activityIndicator.startAnimating()
-       
+        
         viewModel.dataRefreshed = { [weak self] in
             self?.homeCollectionView.reloadData()
             self?.activityIndicator.stopAnimating()
@@ -76,7 +77,8 @@ class HomeViewController: UIViewController {
         homeCollectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: UIControl.Event.valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Reloading...")
-
+        
+// MARK: Constraints
         homeCollectionView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(5)
             make.bottom.equalToSuperview()
@@ -165,6 +167,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let selectedGame = viewModel.games[indexPath.row].id {
+            self.navigationController?.pushViewController(DetailViewController(selectedGame), animated: false)
+        }
     }
 }
 // MARK: - SearchBar

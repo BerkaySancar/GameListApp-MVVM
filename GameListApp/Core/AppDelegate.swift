@@ -5,9 +5,9 @@
 //  Created by Berkay Sancar on 16.08.2022.
 //
 
-import UIKit
 import CoreData
 import SnapKit
+import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

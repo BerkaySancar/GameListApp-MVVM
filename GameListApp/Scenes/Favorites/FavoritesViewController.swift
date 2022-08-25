@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController {
+final class FavoritesViewController: UIViewController {
     
     private let favoritesTableview: UITableView = {
         let tableView = UITableView()
@@ -17,7 +17,8 @@ class FavoritesViewController: UIViewController {
     }()
     
     private let viewModel: FavoritesViewModel
-    
+
+// MARK: - Init
     init(_ viewModel: FavoritesViewModel = FavoritesViewModel()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -51,11 +52,13 @@ class FavoritesViewController: UIViewController {
         
         favoritesTableview.delegate = self
         favoritesTableview.dataSource = self
-        
+ 
+ // MARK: Constraints
         favoritesTableview.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
+ // MARK: - Unfollow Button Actions
     @objc private func unFavButtonTapped(_ sender: UIButton) {
        
         viewModel.deleteFavGames(index: sender.tag)

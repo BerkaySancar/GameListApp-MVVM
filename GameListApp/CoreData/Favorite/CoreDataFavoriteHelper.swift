@@ -14,6 +14,7 @@ class CoreDataFavoriteHelper {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+// MARK: - FetchData
     func fetchData() -> [Favorite]? {
         
         do {
@@ -23,7 +24,7 @@ class CoreDataFavoriteHelper {
         }
         return nil
     }
-    
+// MARK: - SaveData
     func saveData(name: String, id: Int) {
         
         let favorite = Favorite(context: context)
@@ -35,7 +36,7 @@ class CoreDataFavoriteHelper {
             print("error: \(error.localizedDescription)")
         }
     }
-    
+// MARK: - DeleteData
     func deleteData(index: Int) {
         
         if let datas = fetchData() {

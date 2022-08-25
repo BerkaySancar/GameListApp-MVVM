@@ -9,6 +9,8 @@ import UIKit
 
 class FavoritesTableViewCell: UITableViewCell {
     
+    static let identifier = "FavoritesTableViewCell"
+    
     private let favNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)
@@ -22,9 +24,8 @@ class FavoritesTableViewCell: UITableViewCell {
         button.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)
         return button
     }()
-
-    static let identifier = "FavoritesTableViewCell"
     
+// MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -35,11 +36,13 @@ class FavoritesTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+// MARK: - Ui Configure
     private func configure() {
         
         contentView.addSubview(favNameLabel)
         contentView.addSubview(unFavButton)
         
+// MARK: Constraints
         favNameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.right.equalTo(unFavButton.snp.left).offset(4)
@@ -51,7 +54,7 @@ class FavoritesTableViewCell: UITableViewCell {
             make.right.equalToSuperview().offset(-10)
         }
     }
-    
+// MARK: Design Ui
     func design(name: String) {
         favNameLabel.text = name
     }
