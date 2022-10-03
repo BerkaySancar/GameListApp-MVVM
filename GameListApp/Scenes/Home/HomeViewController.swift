@@ -50,12 +50,14 @@ class HomeViewController: UIViewController {
         activityIndicator.startAnimating()
         
         viewModel.dataRefreshed = { [weak self] in
-            self?.homeCollectionView.reloadData()
-            self?.activityIndicator.stopAnimating()
+            guard let self = self else { return }
+            self.homeCollectionView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
         
         viewModel.dataNotRefreshed = { [weak self] in
-            self?.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
+            guard let self = self else { return }
+            self.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
         }
     }
     
@@ -108,22 +110,7 @@ class HomeViewController: UIViewController {
         
         sender.isSelected.toggle()
         
-        if let data = CoreDataFavoriteHelper.shared
-            .fetchData()?
-            .filter({ $0.name == viewModel.games[sender.tag].name }) {
-            
-            if data.isEmpty {
-                CoreDataFavoriteHelper.shared.saveData(name: viewModel.games[sender.tag].name ?? "",
-                                                       id: viewModel.games[sender.tag].id ?? 0)
-            } else {
-                
-                if let index = CoreDataFavoriteHelper.shared
-                    .fetchData()?
-                    .firstIndex(where: { $0.name == viewModel.games[sender.tag].name }) {
-                    CoreDataFavoriteHelper.shared.deleteData(index: index)
-                }
-            }
-        }
+        viewModel.favoriteButtonTapped(senderTag: sender.tag)
     }
 }
 // MARK: - COLLECTiON ViEW

@@ -35,7 +35,8 @@ final class FavoritesViewController: UIViewController {
         configure()
         
         viewModel.dataRefreshed = { [weak self] in
-            self?.favoritesTableview.reloadData()
+            guard let self = self else { return }
+            self.favoritesTableview.reloadData()
         }
     }
     

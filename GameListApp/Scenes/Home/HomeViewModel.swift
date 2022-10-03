@@ -21,12 +21,21 @@ final class HomeViewModel {
     }
 // MARK: - Get Data
     func getGameList() {
-        gameService.fetchGames { response in
-            self.games = response?.results ?? []
-            self.dataRefreshed?()
-        } failure: { error in
-            print(error)
-            self.dataNotRefreshed?()
+        
+        gameService.fetchGames { [weak self] results in
+            guard let self = self else { return }
+            
+            switch results {
+            case .success(let games):
+                DispatchQueue.main.async {
+                    self.games = games ?? []
+                    self.dataRefreshed?()
+                }
+           
+            case .failure(let error):
+                print(error)
+                self.dataNotRefreshed?()
+            }
         }
     }
 // MARK: - Search Operation
@@ -37,6 +46,25 @@ final class HomeViewModel {
             dataRefreshed?()
         } else {
             getGameList()
+        }
+    }
+    
+    func favoriteButtonTapped(senderTag: Int) {
+        
+        if let data = CoreDataFavoriteHelper.shared
+            .fetchData()?
+            .filter({ $0.name == games[senderTag].name }) {
+            
+            if data.isEmpty {
+                CoreDataFavoriteHelper.shared.saveData(name: games[senderTag].name ?? "",
+                                                       id: games[senderTag].id ?? 0)
+            } else {
+                if let index = CoreDataFavoriteHelper.shared
+                    .fetchData()?
+                    .firstIndex(where: { $0.name == games[senderTag].name }) {
+                    CoreDataFavoriteHelper.shared.deleteData(index: index)
+                }
+            }
         }
     }
 }

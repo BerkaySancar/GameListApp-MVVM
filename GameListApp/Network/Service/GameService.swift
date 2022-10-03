@@ -8,15 +8,15 @@
 import Alamofire
 
 protocol GameServiceProtocol {
-    func fetchGames(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void))
-    func fetchDetail(id: Int, success: @escaping (Detail?) -> Void, failure: @escaping ((AFError) -> Void))
+    func fetchGames(completion: @escaping (Result<[Game]?, AFError>) -> Void)
+    func fetchDetail(id: Int, completion: @escaping (Result<Detail?, AFError>) -> Void)
 }
 
 final class GameService: GameServiceProtocol {
   
-    func fetchGames(success: @escaping (BaseResponse?) -> Void, failure: @escaping ((AFError) -> Void)) {
+    func fetchGames(completion: @escaping (Result<[Game]?, AFError>) -> Void) {
         
-        let url = "\(Constants.BASE_URL)?key=\(Constants.API_KEY)"
+        let url = "\(GameListEndpoints.getList.url)\(GameListEndpoints.getList.apiKey)"
         
         NetworkManager.shared.sendRequest(type: BaseResponse.self,
                                           url: url,
@@ -24,17 +24,17 @@ final class GameService: GameServiceProtocol {
             
             switch response {
             case .success(let games):
-                success(games)
+                completion(.success(games.results))
 
             case .failure(let error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
     
-    func fetchDetail(id: Int, success: @escaping (Detail?) -> Void, failure: @escaping ((AFError) -> Void)) {
+    func fetchDetail(id: Int, completion: @escaping (Result<Detail?, AFError>) -> Void) {
         
-        let url = "\(Constants.BASE_URL)/\(id)?key=\(Constants.API_KEY)"
+        let url = "\(GameListEndpoints.getDetail.url)\(id)?\(GameListEndpoints.getDetail.apiKey)"
         
         NetworkManager.shared.sendRequest(type: Detail.self,
                                           url: url,
@@ -42,10 +42,10 @@ final class GameService: GameServiceProtocol {
             
             switch response {
             case .success(let detail):
-                success(detail)
+                completion(.success(detail))
                 
             case .failure(let error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }

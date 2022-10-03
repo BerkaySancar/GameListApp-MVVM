@@ -62,15 +62,17 @@ final class DetailViewController: UIViewController {
     
         setActivityIndicator()
         activityIndicator.startAnimating()
-        
+
         viewModel.dataRefreshed = { [weak self] in
-            self?.design()
-            self?.configure()
-            self?.activityIndicator.stopAnimating()
+            guard let self = self else { return }
+            self.configure()
+            self.design()
+            self.activityIndicator.stopAnimating()
         }
         
         viewModel.dataNotRefreshed = { [weak self] in
-            self?.errorMessage(title: "WARNING", message: "Game details could not load. Please try again.")
+            guard let self = self else { return }
+            self.errorMessage(title: "WARNING", message: "Game details could not load. Please try again.")
         }
     }
 // MARK: - Activity Indicator
