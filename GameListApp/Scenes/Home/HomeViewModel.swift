@@ -7,34 +7,50 @@
 
 import Foundation
 
-final class HomeViewModel {
+protocol HomeViewModelProtocol {
+    
+    var delegate: HomeViewDelegate? { get set }
+    var gameService: GameServiceProtocol { get }
+    
+    var games: [Game] { get set }
+    
+    func getGameList()
+    func search(_ text: String?)
+    func favoriteButtonTapped(senderTag: Int)
+    func viewDidLoad()
+}
+
+final class HomeViewModel: HomeViewModelProtocol {
+    
+    weak var delegate: HomeViewDelegate?
+    var gameService: GameServiceProtocol
   
     var games: [Game] = [Game]()
-    var gameService: GameServiceProtocol
-    
-    var dataRefreshed: (() -> Void)?
-    var dataNotRefreshed: (() -> Void)?
     
 // MARK: - Init
-    init(_ service: GameServiceProtocol = GameService()) {
+    init(_ service: GameServiceProtocol) {
         self.gameService = service
+    }
+// MARK: ViewDidLoad
+    func viewDidLoad() {
+        self.delegate?.viewLoaded()
     }
 // MARK: - Get Data
     func getGameList() {
-        
+        self.delegate?.setLoading(isLoading: true)
         gameService.fetchGames { [weak self] results in
-            guard let self = self else { return }
-            
+            guard let self else { return }
+            self.delegate?.setLoading(isLoading: false)
             switch results {
             case .success(let games):
                 DispatchQueue.main.async {
                     self.games = games ?? []
-                    self.dataRefreshed?()
+                    self.delegate?.dataRefreshed()
                 }
            
             case .failure(let error):
                 print(error)
-                self.dataNotRefreshed?()
+                self.delegate?.dataError()
             }
         }
     }
@@ -43,12 +59,12 @@ final class HomeViewModel {
         if let text = text, !text.isEmpty {
             let searchData = self.games.filter { $0.name!.lowercased().contains(text.lowercased()) }
             self.games = searchData
-            dataRefreshed?()
+            self.delegate?.dataRefreshed()
         } else {
             getGameList()
         }
     }
-    
+// MARK: - FavButtonTapped
     func favoriteButtonTapped(senderTag: Int) {
         
         if let data = CoreDataFavoriteHelper.shared

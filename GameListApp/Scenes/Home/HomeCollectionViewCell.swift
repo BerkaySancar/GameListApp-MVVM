@@ -8,25 +8,25 @@
 import Kingfisher
 import UIKit
 
-class HomeCollectionViewCell: UICollectionViewCell {
+final class HomeCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "HomeCollectionViewCell"
     
-    private let gameImageView: UIImageView = {
+    private lazy var gameImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    private let gameNameLabel: UILabel = {
+    private lazy var gameNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold)
         label.textColor = .white
         return label
     }()
     
-    let gameFavButton: UIButton = {
+    lazy var gameFavButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemRed
         button.backgroundColor = .white

@@ -11,7 +11,8 @@ final class MainTabBarViewController: UITabBarController {
 
     private let homeViewController = UINavigationController(rootViewController:
                                                                 HomeViewController(HomeViewModel(GameService())))
-    private let favoritesViewController = UINavigationController(rootViewController: FavoritesViewController())
+    private let favoritesViewController = UINavigationController(rootViewController:
+                                           FavoritesViewController(FavoritesViewModel(CoreDataFavoriteHelper())))
     
     override func viewDidLoad() {
         super.viewDidLoad()

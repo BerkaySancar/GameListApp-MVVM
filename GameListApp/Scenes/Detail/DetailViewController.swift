@@ -9,27 +9,35 @@ import Kingfisher
 import SafariServices
 import UIKit
 
+protocol DetailViewDelegate: AnyObject {
+    
+    func setLoading(isLoading: Bool)
+    func dataRefreshed()
+    func dataError()
+    func viewLoaded()
+}
+
 final class DetailViewController: UIViewController {
     
-    private let detailImage: UIImageView = {
+    private lazy var detailImage: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
-    private let detailName: UILabel = {
+    private lazy var detailName: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.bold)
         label.textColor = .label
         return label
     }()
-    private let detailDescription: UILabel = {
+    private lazy var detailDescription: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .justified
         label.textColor = .label
         return label
     }()
-    private let websiteButton: UIButton = {
+    private lazy var websiteButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 2
@@ -40,57 +48,44 @@ final class DetailViewController: UIViewController {
         return button
     }()
     
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    private let activityIndicator = UIActivityIndicatorView()
+    private lazy var scrollView = UIScrollView()
+    private lazy var contentView = UIView()
+    private lazy var activityIndicator = UIActivityIndicatorView()
     
-    private let viewModel = DetailViewModel()
+    private var viewModel: DetailViewModelProtocol
     
-// MARK: - Init
-    init(_ gameID: Int) {
+    init(viewModel: DetailViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        viewModel.getDetail(with: gameID)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        setActivityIndicator()
-        activityIndicator.startAnimating()
-
-        viewModel.dataRefreshed = { [weak self] in
-            guard let self = self else { return }
-            self.configure()
-            self.design()
-            self.activityIndicator.stopAnimating()
-        }
         
-        viewModel.dataNotRefreshed = { [weak self] in
-            guard let self = self else { return }
-            self.errorMessage(title: "WARNING", message: "Game details could not load. Please try again.")
-        }
+        viewModel.delegate = self
+        viewModel.viewDidLoad()
     }
+    
 // MARK: - Activity Indicator
     private func setActivityIndicator() {
-        view.backgroundColor = .systemBackground
         view.addSubview(activityIndicator)
+        activityIndicator.style = .medium
         
         activityIndicator.snp.makeConstraints { make in
-            make.centerX.centerY.equalTo(view)
-            make.width.height.equalTo(68)
+            make.top.equalToSuperview().offset(view.frame.height / 16)
+            make.right.equalToSuperview().offset(-20)
         }
     }
 // MARK: - Ui Configure
     private func configure() {
-        
-        navigationItem.title = viewModel.detailName
+        view.backgroundColor = .systemBackground
         navigationController?.navigationBar.tintColor = .label
-        
+        title = viewModel.detailName
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(detailImage)
@@ -110,7 +105,7 @@ final class DetailViewController: UIViewController {
         }
         detailImage.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top)
-            make.left.right.equalTo(contentView)
+            make.left.right.equalTo(view)
             make.height.equalTo(detailImage.snp.width)
         }
         detailName.snp.makeConstraints { make in
@@ -127,7 +122,28 @@ final class DetailViewController: UIViewController {
             make.bottom.equalTo(contentView).offset(-20)
         }
     }
-    private func design() {
+
+// MARK: - Website Button Action & Safari Service
+    @objc private func websiteButtonTapped(_ sender: UIButton) {
+        
+        if let url = URL(string: viewModel.detailWebsite ?? "") {
+            let safariViewController = SFSafariViewController(url: url)
+            present(safariViewController, animated: true)
+        }
+    }
+}
+// MARK: - DetailViewDelegate
+extension DetailViewController: DetailViewDelegate {
+    
+    func setLoading(isLoading: Bool) {
+        if isLoading == true {
+            self.activityIndicator.startAnimating()
+        } else {
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func dataRefreshed() {
         
         if let url = URL(string: viewModel.detailBackgroundImage ?? "") {
             detailImage.kf.setImage(with: url)
@@ -139,13 +155,17 @@ final class DetailViewController: UIViewController {
             .replacingOccurrences(of: "<br>", with: "")
             .replacingOccurrences(of: "<br />", with: "")
         detailDescription.text = descriptionText
+       
+        self.configure()
     }
-// MARK: - Website Button Action & Safari Service
-    @objc private func websiteButtonTapped(_ sender: UIButton) {
-        
-        if let url = URL(string: viewModel.detailWebsite ?? "") {
-            let safariViewController = SFSafariViewController(url: url)
-            present(safariViewController, animated: true)
-        }
+    
+    func dataError() {
+        self.errorMessage(title: "WARNING", message: "Game details could not load. Please try again.")
+    }
+    
+    func viewLoaded() {
+        view.backgroundColor = .systemBackground
+        self.setActivityIndicator()
+        self.viewModel.getDetail()
     }
 }

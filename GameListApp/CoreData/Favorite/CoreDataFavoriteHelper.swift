@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CoreDataFavoriteHelper {
+struct CoreDataFavoriteHelper {
     
     static let shared = CoreDataFavoriteHelper()
     

@@ -7,18 +7,18 @@
 
 import UIKit
 
-class FavoritesTableViewCell: UITableViewCell {
+final class FavoritesTableViewCell: UITableViewCell {
     
     static let identifier = "FavoritesTableViewCell"
     
-    private let favNameLabel: UILabel = {
+    private lazy var favNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.semibold)
         label.numberOfLines = 0
         return label
     }()
     
-    let unFavButton: UIButton = {
+    lazy var unFavButton: UIButton = {
         let button = UIButton()
         button.tintColor = .systemRed
         button.setImage(UIImage(systemName: "heart.fill"), for: UIControl.State.normal)

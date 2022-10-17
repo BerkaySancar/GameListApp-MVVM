@@ -7,19 +7,26 @@
 
 import UIKit
 
+protocol FavoritesViewDelegate: AnyObject {
+    
+    func dataRefreshed()
+    func viewLoaded()
+    func fetchData()
+}
+
 final class FavoritesViewController: UIViewController {
     
-    private let favoritesTableview: UITableView = {
+    private lazy var favoritesTableview: UITableView = {
         let tableView = UITableView()
         tableView.register(FavoritesTableViewCell.self,
                            forCellReuseIdentifier: FavoritesTableViewCell.identifier)
         return tableView
     }()
     
-    private let viewModel: FavoritesViewModel
+    private var viewModel: FavoritesViewModelProtocol
 
 // MARK: - Init
-    init(_ viewModel: FavoritesViewModel = FavoritesViewModel()) {
+    init(_ viewModel: FavoritesViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,18 +39,14 @@ final class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configure()
-        
-        viewModel.dataRefreshed = { [weak self] in
-            guard let self = self else { return }
-            self.favoritesTableview.reloadData()
-        }
+        viewModel.delegate = self
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.fetchFavGames()
+        viewModel.viewWillAppear()
     }
  // MARK: - Ui Configure
     private func configure() {
@@ -62,8 +65,7 @@ final class FavoritesViewController: UIViewController {
  // MARK: - Unfollow Button Actions
     @objc private func unFavButtonTapped(_ sender: UIButton) {
        
-        viewModel.deleteFavGames(index: sender.tag)
-        viewModel.fetchFavGames()
+        viewModel.unFavButtonTapped(index: sender.tag)
     }
 }
 // MARK: - Favorites Table View
@@ -89,5 +91,20 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+}
+// MARK: - FavoritesViewDelegate
+extension FavoritesViewController: FavoritesViewDelegate {
+    
+    func dataRefreshed() {
+        self.favoritesTableview.reloadData()
+    }
+    
+    func viewLoaded() {
+        configure()
+    }
+    
+    func fetchData() {
+        viewModel.fetchFavGames()
     }
 }

@@ -7,9 +7,17 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+protocol HomeViewDelegate: AnyObject {
     
-    private let homeCollectionView: UICollectionView = {
+    func setLoading(isLoading: Bool)
+    func dataRefreshed()
+    func dataError()
+    func viewLoaded()
+}
+
+final class HomeViewController: UIViewController {
+    
+    private lazy var homeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero,
@@ -19,22 +27,23 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    private let searchBar: UISearchBar = {
+    private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Type here to search"
         searchBar.searchBarStyle = .prominent
         return searchBar
     }()
     
-    private let refreshControl = UIRefreshControl()
-    private let activityIndicator = UIActivityIndicatorView()
+    private lazy var refreshControl = UIRefreshControl()
+    private lazy var activityIndicator = UIActivityIndicatorView()
     
-    private let viewModel: HomeViewModel
+    private var viewModel: HomeViewModelProtocol
     
 // MARK: - Init
-    init(_ viewModel: HomeViewModel = HomeViewModel()) {
+    init(_ viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -45,20 +54,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configure()
-        viewModel.getGameList()
-        activityIndicator.startAnimating()
-        
-        viewModel.dataRefreshed = { [weak self] in
-            guard let self = self else { return }
-            self.homeCollectionView.reloadData()
-            self.activityIndicator.stopAnimating()
-        }
-        
-        viewModel.dataNotRefreshed = { [weak self] in
-            guard let self = self else { return }
-            self.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
-        }
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,10 +103,33 @@ class HomeViewController: UIViewController {
 // MARK: - Favorite Button Actions
         
     @objc private func favButttonTapped(_ sender: UIButton) {
-        
         sender.isSelected.toggle()
         
         viewModel.favoriteButtonTapped(senderTag: sender.tag)
+    }
+}
+// MARK: - HomeViewDelegate
+extension HomeViewController: HomeViewDelegate {
+    
+    func viewLoaded() {
+        configure()
+        viewModel.getGameList()
+    }
+    
+    func setLoading(isLoading: Bool) {
+        if isLoading == true {
+            self.activityIndicator.startAnimating()
+        } else {
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func dataRefreshed() {
+        self.homeCollectionView.reloadData()
+    }
+    
+    func dataError() {
+        self.errorMessage(title: "ERROR", message: "Games could not loaded! Please pull to refresh.")
     }
 }
 // MARK: - COLLECTiON ViEW
@@ -129,7 +148,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         cell.gameFavButton.addTarget(self, action: #selector(favButttonTapped(_:)), for: UIControl.Event.touchUpInside)
         cell.gameFavButton.tag = indexPath.row
-        cell.design(gameImageURL: viewModel.games[indexPath.row].background_image ?? "",
+        cell.design(gameImageURL: viewModel.games[indexPath.row].backgroundImage ?? "",
                     gameName: viewModel.games[indexPath.row].name ?? "")
         
         if let data = CoreDataFavoriteHelper
@@ -150,21 +169,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let selectedGame = viewModel.games[indexPath.row].id {
-            self.navigationController?.pushViewController(DetailViewController(selectedGame), animated: false)
-        }
+        guard let selectedGame = viewModel.games[indexPath.row].id else { return }
+        let detailVM = DetailViewModel(gameID: selectedGame)
+        
+        navigationController?.pushViewController(DetailViewController(viewModel: detailVM), animated: true)
     }
 }
 // MARK: - SearchBar
 extension HomeViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         self.viewModel.search(searchText)
     }
 }

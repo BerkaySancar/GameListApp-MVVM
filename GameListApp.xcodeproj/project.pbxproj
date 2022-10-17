@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B11F8E8928B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */; };
-		B11F8E8A28B3A033002D3121 /* Favorite+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */; };
+		B11F8E8A28B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8828B3A033002D3121 /* Favorite+CoreDataClass.swift */; };
 		B11F8E8D28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */; };
 		B11F8E8F28B3A76F002D3121 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11F8E8E28B3A76F002D3121 /* FavoritesTableViewCell.swift */; };
 		B137505C28B12EA000A51DE9 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137505B28B12EA000A51DE9 /* FavoritesViewModel.swift */; };
@@ -57,8 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataClass.swift"; sourceTree = "<group>"; };
-		B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B11F8E8828B3A033002D3121 /* Favorite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFavoriteHelper.swift; sourceTree = "<group>"; };
 		B11F8E8E28B3A76F002D3121 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		B137505B28B12EA000A51DE9 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -138,8 +136,7 @@
 		B11F8E9128B3CF07002D3121 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
-				B11F8E8728B3A033002D3121 /* Favorite+CoreDataClass.swift */,
-				B11F8E8828B3A033002D3121 /* Favorite+CoreDataProperties.swift */,
+				B11F8E8828B3A033002D3121 /* Favorite+CoreDataClass.swift */,
 				B11F8E8C28B3A2F1002D3121 /* CoreDataFavoriteHelper.swift */,
 			);
 			path = Favorite;
@@ -221,7 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				B1553DFD28AC26CA0001C85E /* Core */,
-				B1553DFE28AC27130001C85E /* Sources */,
+				B1553DFE28AC27130001C85E /* Resources */,
 				B137505D28B136B900A51DE9 /* Extensions */,
 				B11F8E8B28B3A2B3002D3121 /* CoreData */,
 				B1553E0328AC29FA0001C85E /* Network */,
@@ -251,7 +248,6 @@
 		B1553DFD28AC26CA0001C85E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				B1553DD828AC25630001C85E /* LaunchScreen.storyboard */,
 				B1553DCA28AC25620001C85E /* AppDelegate.swift */,
 				B1553DCC28AC25620001C85E /* SceneDelegate.swift */,
 				B1553DDB28AC25630001C85E /* Info.plist */,
@@ -259,12 +255,13 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		B1553DFE28AC27130001C85E /* Sources */ = {
+		B1553DFE28AC27130001C85E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B1553DD828AC25630001C85E /* LaunchScreen.storyboard */,
 				B1553DD628AC25630001C85E /* Assets.xcassets */,
 			);
-			path = Sources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		B1553E0328AC29FA0001C85E /* Network */ = {
@@ -488,10 +485,9 @@
 				B137505F28B136D600A51DE9 /* UIViewController+Extension.swift in Sources */,
 				B19C6A1C28B6690800BFA2AC /* GameDetailModel.swift in Sources */,
 				B1F3E0DF28EAE4BA004A6F15 /* GameListEndpoints.swift in Sources */,
-				B11F8E8A28B3A033002D3121 /* Favorite+CoreDataProperties.swift in Sources */,
+				B11F8E8A28B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */,
 				B140413028AD1B3800B0CB57 /* HomeViewModel.swift in Sources */,
 				B140413528AD315300B0CB57 /* MainTabBarViewController.swift in Sources */,
-				B11F8E8928B3A033002D3121 /* Favorite+CoreDataClass.swift in Sources */,
 				B140413828AD31D500B0CB57 /* FavoritesViewController.swift in Sources */,
 				B140412528ACE2BC00B0CB57 /* NetworkManager.swift in Sources */,
 				B1553DCD28AC25620001C85E /* SceneDelegate.swift in Sources */,

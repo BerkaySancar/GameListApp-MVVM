@@ -12,7 +12,7 @@ protocol GameServiceProtocol {
     func fetchDetail(id: Int, completion: @escaping (Result<Detail?, AFError>) -> Void)
 }
 
-final class GameService: GameServiceProtocol {
+struct GameService: GameServiceProtocol {
   
     func fetchGames(completion: @escaping (Result<[Game]?, AFError>) -> Void) {
         
